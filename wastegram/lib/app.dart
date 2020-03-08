@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/welcome.dart';
 import 'screens/entry_lists.dart';
 import 'screens/entry_form.dart';
+import 'screens/choose_or_take.dart';
 import 'screens/details.dart';
 import 'screens/photo_screen.dart';
 
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
   static final routes = {
     '/': (context) => Welcome(),
     'entries': (context) => EntryLists(),
-    'enterWaste': (context) => WasteEntryForm(),
+    'pictures': (context) => ChooseOrTakeForm(),
     'wasteDetails': (context) => WasteDetails(),
     'photoScreen': (context) => PhotoScreen()
   };

@@ -29,7 +29,7 @@ class NewEntryButton extends StatelessWidget {
     return FloatingActionButton(
       child: Icon(Icons.add),
       onPressed: (){
-        Navigator.of(context).pushNamed('enterWaste');
+        Navigator.of(context).pushNamed('pictures');
       }
       );
   }
