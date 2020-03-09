@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'dart:io';
@@ -10,6 +11,7 @@ class ChooseOrTakeForm extends StatefulWidget{
 }
 
 class _ChooseOrTakeState extends State<ChooseOrTakeForm> {
+  final _formKey = GlobalKey<FormState>();
   File image;
 
   void getImage() async {
@@ -42,33 +44,29 @@ class _ChooseOrTakeState extends State<ChooseOrTakeForm> {
                 padding: EdgeInsets.all(30),
                 child: Image.file(image)
               ),
-              Text('Number of items form'),
-              Text('Upload button')
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: TextFormField(
+                      decoration: InputDecoration(labelText: 'Total Items', border: OutlineInputBorder()),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
+                      )
+                    ),
+                    RaisedButton(
+                      onPressed: (){
+                        
+                      })
+                  ]
+                ),
+              ),
             ]
           )
         )
       );
     }
-  }
-}
-
-class ChoosePhoto extends StatelessWidget{
-  @override
-  Widget build(BuildContext context){
-    return GestureDetector(
-      child: Text('Choose Photo'),
-      onTap: (){
-        Navigator.of(context).pushNamed('photoScreen');
-      },
-    );
-  }
-}
-
-class TakePhoto extends StatelessWidget{
-  @override
-  Widget build(BuildContext context){
-    return GestureDetector(
-      child: Text('Take Photo'),
-    );
   }
 }
