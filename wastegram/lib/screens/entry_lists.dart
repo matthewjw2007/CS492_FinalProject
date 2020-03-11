@@ -12,11 +12,27 @@ class _EntryListsState extends State<EntryLists> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Wastegram')),
-      body: Center(
-        child: Container(
-          child: Text('Wastegram')
-        )
-      ),
+      body: StreamBuilder(
+        stream: Firestore.instance.collection('wastegram').snapshots(),
+        builder: (context, snapshot) {
+          if(snapshot.hasData){
+            return ListView.builder(
+              itemCount: snapshot.data.documents.length,
+              itemBuilder: (context, index) {
+                var post = snapshot.data.documents[index];
+                return ListTile(
+                  title: Text(post['date']),
+                  subtitle: Text(post['total_waste'].toString())
+                );
+              }
+              );
+          } else {
+            return Center(
+              child: CircularProgressIndicator()
+            );
+          }
+        }
+        ),
       floatingActionButton: NewEntryButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
