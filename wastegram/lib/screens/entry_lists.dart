@@ -50,28 +50,3 @@ class NewEntryButton extends StatelessWidget {
       );
   }
 }
-
-// return Scaffold(
-//       appBar: AppBar(title: Text('Wastegram')),
-//       body: StreamBuilder(
-//       stream: Firestore.instance.collection('test').snapshots(),
-//       builder: (context, snapshot) {
-//         if(snapshot.hasData){
-//           return ListView.builder(
-//             itemCount: snapshot.data.documents.length,
-//             itemBuilder: (context, index) {
-//               var post = snapshot.data.documents[index];
-//               return ListTile(
-//                 leading: Text(post['total'].toString()),
-//                 title: Text(post['name']),
-//               );
-//             },
-//           );
-//         } else {
-//           return Center(
-//             child: CircularProgressIndicator()
-//           );
-//         }
-//       }
-//       )
-//     );

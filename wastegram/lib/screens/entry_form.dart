@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,14 @@ class _EntryFormState extends State<EntryForm> {
   final _formKey = GlobalKey<FormState>();
   final formEntryFields = FormFields();
   File image;
+  LocationData locationData;
+
+  void getLocation() async {
+    var locationService = Location();
+    locationData = await locationService.getLocation();
+    print('Latitude: ${locationData.latitude}');
+    print('Longitude: ${locationData.longitude}');
+  }
 
   void getImage() async {
     image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -80,7 +89,12 @@ class _EntryFormState extends State<EntryForm> {
                       child: Text('Upload'),
                       onPressed: () async {
                         // Upload values to firestore DB
-                        print(formEntryFields.wasteTotal);
+                        // Firestore.instance.collection('wastegram').add({
+                        //   // Pass a map of key value pairs
+                        //   // date, image_url, total_waste, longitude, latitude
+                        // });
+                        //print(formEntryFields.wasteTotal);
+                        //getLocation();
 
                         // Go back to list screen and pop off entry form screen
                         Navigator.of(context).pop('pictures');
