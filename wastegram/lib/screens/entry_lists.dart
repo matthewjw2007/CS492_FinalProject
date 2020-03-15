@@ -25,7 +25,7 @@ class _EntryListsState extends State<EntryLists> {
                   subtitle: Text(post['total_waste'].toString()),
                   onTap: () {
                     Navigator.of(context).pushNamed('wasteDetails', 
-                    arguments: {'date': post[index]['date'], 'image': post[index]['image_url'], 'items': post[index]['total_waste'], 'longitude': post[index]['longitude'], 'latitude': post[index]['latitude']});
+                    arguments: {'date': post['date'], 'image': post['image_url'], 'items': post['total_waste'], 'longitude': post['longitude'], 'latitude': post['latitude']});
                   },
                 );
               }
