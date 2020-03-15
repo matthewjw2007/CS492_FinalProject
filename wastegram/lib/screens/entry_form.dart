@@ -107,7 +107,7 @@ class _EntryFormState extends State<EntryForm> {
                           'date': formatted,
                           'time': time,
                           'image_url': url,
-                          'total_waste': '3',
+                          'total_waste': 3,
                           'longitude': locationData.longitude,
                           'latitude': locationData.latitude
                         });
