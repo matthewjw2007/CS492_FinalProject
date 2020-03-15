@@ -1,10 +1,11 @@
 class FormFields {
+  String date;
   String image;
+  int total;
   String longitude;
   String latitude;
-  int total;
 
-  FormFields({this.image, this.longitude, this.latitude, this.total});
+  FormFields({this.date, this.image, this.total, this.longitude, this.latitude});
 
   int get wasteTotal{
     return total;

@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 import 'package:location/location.dart';
 import 'dart:io';
+import 'package:intl/intl.dart';
 
 import 'package:wastegram/model/form_fields.dart';
 
@@ -20,12 +21,13 @@ class _EntryFormState extends State<EntryForm> {
   final formEntryFields = FormFields();
   File image;
   LocationData locationData;
+  String url;
 
   void getLocation() async {
     var locationService = Location();
     locationData = await locationService.getLocation();
-    print('Latitude: ${locationData.latitude}');
-    print('Longitude: ${locationData.longitude}');
+    //print('Latitude: ${locationData.latitude}');
+    //print('Longitude: ${locationData.longitude}');
   }
 
   void getImage() async {
@@ -33,8 +35,8 @@ class _EntryFormState extends State<EntryForm> {
     StorageReference storageReference = FirebaseStorage.instance.ref().child(Path.basename(image.path));
     StorageUploadTask uploadTask = storageReference.putFile(image);
     await uploadTask.onComplete;
-    final url = await storageReference.getDownloadURL();
-    print('URL: $url');
+    url = await storageReference.getDownloadURL();
+    //print('URL: $url');
     setState(() { });
   }
 
@@ -89,12 +91,26 @@ class _EntryFormState extends State<EntryForm> {
                       child: Text('Upload'),
                       onPressed: () async {
                         // Upload values to firestore DB
-                        // Firestore.instance.collection('wastegram').add({
-                        //   // Pass a map of key value pairs
-                        //   // date, image_url, total_waste, longitude, latitude
-                        // });
-                        //print(formEntryFields.wasteTotal);
-                        //getLocation();
+
+                        // Date
+                        var date = DateTime.now();
+                        var time = DateTime.now().millisecondsSinceEpoch;
+                        var formatter = new DateFormat('E, MMMM d, y');
+                        String formatted = formatter.format(date);
+                        //print('$formatted');
+
+                        // Location
+                        var locationService = Location();
+                        locationData = await locationService.getLocation();
+
+                        Firestore.instance.collection('wastegram').add({
+                          'date': formatted,
+                          'time': time,
+                          'image_url': url,
+                          'total_waste': '3',
+                          'longitude': locationData.longitude,
+                          'latitude': locationData.latitude
+                        });
 
                         // Go back to list screen and pop off entry form screen
                         Navigator.of(context).pop('pictures');

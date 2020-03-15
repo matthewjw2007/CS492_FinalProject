@@ -15,14 +15,18 @@ class _EntryListsState extends State<EntryLists> {
       body: StreamBuilder(
         stream: Firestore.instance.collection('wastegram').snapshots(),
         builder: (context, snapshot) {
-          if(snapshot.hasData){
+          if(snapshot.hasData && snapshot.data.documents != null && snapshot.data.documents.length > 0){
             return ListView.builder(
               itemCount: snapshot.data.documents.length,
               itemBuilder: (context, index) {
                 var post = snapshot.data.documents[index];
                 return ListTile(
                   title: Text(post['date']),
-                  subtitle: Text(post['total_waste'].toString())
+                  subtitle: Text(post['total_waste'].toString()),
+                  onTap: () {
+                    Navigator.of(context).pushNamed('wasteDetails', 
+                    arguments: {'date': post[index]['date'], 'image': post[index]['image_url'], 'items': post[index]['total_waste'], 'longitude': post[index]['longitude'], 'latitude': post[index]['latitude']});
+                  },
                 );
               }
               );
