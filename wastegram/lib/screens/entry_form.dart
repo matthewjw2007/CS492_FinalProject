@@ -26,8 +26,6 @@ class _EntryFormState extends State<EntryForm> {
   void getLocation() async {
     var locationService = Location();
     locationData = await locationService.getLocation();
-    //print('Latitude: ${locationData.latitude}');
-    //print('Longitude: ${locationData.longitude}');
   }
 
   void getImage() async {
@@ -36,7 +34,6 @@ class _EntryFormState extends State<EntryForm> {
     StorageUploadTask uploadTask = storageReference.putFile(image);
     await uploadTask.onComplete;
     url = await storageReference.getDownloadURL();
-    //print('URL: $url');
     setState(() { });
   }
 
@@ -90,14 +87,15 @@ class _EntryFormState extends State<EntryForm> {
                     RaisedButton(
                       child: Text('Upload'),
                       onPressed: () async {
-                        // Upload values to firestore DB
+                        if(_formKey.currentState.validate()){
+                          _formKey.currentState.save();
+                          // Upload values to firestore DB
 
                         // Date
                         var date = DateTime.now();
                         var time = DateTime.now().millisecondsSinceEpoch;
                         var formatter = new DateFormat('E, MMMM d, y');
                         String formatted = formatter.format(date);
-                        //print('$formatted');
 
                         // Location
                         var locationService = Location();
@@ -107,7 +105,7 @@ class _EntryFormState extends State<EntryForm> {
                           'date': formatted,
                           'time': time,
                           'image_url': url,
-                          'total_waste': 3,
+                          'total_waste': formEntryFields.total,
                           'longitude': locationData.longitude,
                           'latitude': locationData.latitude
                         });
@@ -115,6 +113,7 @@ class _EntryFormState extends State<EntryForm> {
                         // Go back to list screen and pop off entry form screen
                         Navigator.of(context).pop('pictures');
                         Navigator.of(context).pushNamed('entries');
+                        }
                       })
                   ]
                 ),
