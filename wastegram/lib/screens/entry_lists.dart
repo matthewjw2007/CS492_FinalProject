@@ -50,45 +50,6 @@ class _EntryListsState extends State<EntryLists> {
       }
       );
   }
-
-  // @override
-  // Widget build(BuildContext context){
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('Wastegram - $totalWaste')),
-  //     body: StreamBuilder(
-  //       stream: Firestore.instance.collection('wastegram').snapshots(),
-  //       builder: (context, snapshot) {
-  //         if(snapshot.hasData && snapshot.data.documents != null && snapshot.data.documents.length > 0){
-  //           return ListView.builder(
-  //             itemCount: snapshot.data.documents.length,
-  //             itemBuilder: (context, index) {
-  //               var post = snapshot.data.documents[index];
-  //               for(var i=0; i<snapshot.data.documents.length; i++){
-  //                 totalWaste = totalWaste + post['total_waste'];
-  //               }
-
-  //               return ListTile(
-  //                 title: Text(post['date']),
-  //                 subtitle: Text(post['total_waste'].toString()),
-  //                 onTap: () {
-  //                   Navigator.of(context).pushNamed('wasteDetails', 
-  //                   arguments: {'date': post['date'], 'image': post['image_url'], 'items': post['total_waste'], 'longitude': post['longitude'], 'latitude': post['latitude']});
-  //                 },
-  //               );
-  //             }
-  //             );
-  //         } else {
-  //           return Center(
-  //             child: CircularProgressIndicator()
-  //           );
-  //         }
-  //       }
-  //       ),
-  //     floatingActionButton: NewEntryButton(),
-  //     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-  //   );
-  // }
 }
 
 class NewEntryButton extends StatelessWidget {

@@ -91,28 +91,31 @@ class _EntryFormState extends State<EntryForm> {
                           _formKey.currentState.save();
                           // Upload values to firestore DB
 
-                        // Date
-                        var date = DateTime.now();
-                        var time = DateTime.now().millisecondsSinceEpoch;
-                        var formatter = new DateFormat('E, MMMM d, y');
-                        String formatted = formatter.format(date);
+                          // Date
+                          var date = DateTime.now();
+                          var time = DateTime.now().millisecondsSinceEpoch;
+                          var formatter = new DateFormat('E, MMMM d, y');
+                          String formatted = formatter.format(date);
+                          formEntryFields.date = formatted;
 
-                        // Location
-                        var locationService = Location();
-                        locationData = await locationService.getLocation();
+                          // Location
+                          var locationService = Location();
+                          locationData = await locationService.getLocation();
+                          formEntryFields.longitude = locationData.longitude;
+                          formEntryFields.latitude = locationData.latitude;
 
-                        Firestore.instance.collection('wastegram').add({
-                          'date': formatted,
-                          'time': time,
-                          'image_url': url,
-                          'total_waste': formEntryFields.total,
-                          'longitude': locationData.longitude,
-                          'latitude': locationData.latitude
-                        });
+                          Firestore.instance.collection('wastegram').add({
+                            'date': formEntryFields.date,
+                            'time': time,
+                            'image_url': url,
+                            'total_waste': formEntryFields.total,
+                            'longitude': formEntryFields.longitude,
+                            'latitude': formEntryFields.latitude
+                          });
 
-                        // Go back to list screen and pop off entry form screen
-                        Navigator.of(context).pop('pictures');
-                        Navigator.of(context).pushNamed('entries');
+                          // Go back to list screen and pop off entry form screen
+                          Navigator.of(context).pop('pictures');
+                          Navigator.of(context).pushNamed('entries');
                         }
                       })
                   ]
